@@ -17,15 +17,34 @@
             <p>Estimate fuel cost for your trip</p>
         </header>
 
+        <div class="mode-selector">
+            <button type="button" id="mode-refill" class="mode-btn active" data-mode="refill">⛽ Fill Tank</button>
+            <button type="button" id="mode-trip" class="mode-btn" data-mode="trip">🗺️ Trip Planner</button>
+        </div>
+
         <main class="input-section">
-            <div class="form-group">
-                <label for="distance">Current Dashboard Range (KM)</label>
+            <div class="form-group" id="input-group-primary">
+                <label for="distance" id="primary-label">Current Dashboard Range (KM)</label>
                 <input type="number" id="distance" placeholder="e.g., 250" min="0" step="any">
+            </div>
+
+            <div class="form-group" id="input-trip-cost" hidden>
+                <label for="trip-budget">Trip Budget (EGP) - <small>Optional if distance is set</small></label>
+                <input type="number" id="trip-budget" placeholder="e.g., 500" min="0" step="any">
             </div>
 
             <div class="form-group">
                 <label for="price">Fuel Price per Liter (EGP)</label>
                 <input type="number" id="price" placeholder="e.g., 15.75" min="0" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="condition">Driving Condition</label>
+                <select id="condition">
+                    <option value="mixed">🔀 Mixed (Mautad - 8.0L/100km)</option>
+                    <option value="city">🏙️ City Only (9.5L/100km)</option>
+                    <option value="highway">🛣️ Highway (7.0L/100km)</option>
+                </select>
             </div>
 
             <div class="error-message" id="error-message" aria-live="polite"></div>
@@ -37,27 +56,29 @@
         </main>
 
         <section class="result-section" id="result-section" hidden>
-            <div class="result-card">
-                <h3>Liters to Fill Tank</h3>
-                <p id="fuel-needed-result" class="result-value">0.00 <span class="unit">Liters</span></p>
-            </div>
-            <div class="result-card">
-                <h3>Cost to Fill Full</h3>
-                <p id="fuel-cost-result" class="result-value">0.00 <span class="unit">EGP</span></p>
-            </div>
-            <div class="result-card">
-                <h3>Range Added</h3>
-                <p id="range-added-result" class="result-value">0 <span class="unit">KM</span></p>
-            </div>
-            <div class="result-card">
-                <h3>New Total Range</h3>
-                <p id="new-range-result" class="result-value">600 <span class="unit">KM</span></p>
+            <div class="result-grid">
+                <div class="result-card" id="card-liters">
+                    <h3 id="label-liters">Liters to Fill</h3>
+                    <p id="fuel-needed-result" class="result-value">0.00 <span class="unit">Liters</span></p>
+                </div>
+                <div class="result-card" id="card-cost">
+                    <h3 id="label-cost">Cost to Fill</h3>
+                    <p id="fuel-cost-result" class="result-value">0.00 <span class="unit">EGP</span></p>
+                </div>
+                <div class="result-card" id="card-range-added">
+                    <h3>Range Added</h3>
+                    <p id="range-added-result" class="result-value">0 <span class="unit">KM</span></p>
+                </div>
+                <div class="result-card" id="card-total-range">
+                    <h3>New Total Range</h3>
+                    <p id="new-range-result" class="result-value">0 <span class="unit">KM</span></p>
+                </div>
             </div>
         </section>
 
         <footer class="vehicle-info">
-            <p>Optimized for: <strong>Kia Soul 2014</strong><br>Max Range: <strong>600km</strong> | Avg. Consumption:
-                <strong>8.7 L/100km</strong></p>
+            <p>Optimized for: <strong>Kia Soul 2014</strong><br>
+            Tank Capacity: <strong>54L</strong> | Official Consumption: <strong>7.5 L/100km</strong></p>
         </footer>
     </div>
 

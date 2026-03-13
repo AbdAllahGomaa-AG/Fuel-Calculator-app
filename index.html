@@ -6,80 +6,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fuel Calculator</title>
     <meta name="description" content="Estimate fuel cost for your trip.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="calculator-container">
         <header class="header">
-            <h1>Fuel Calculator</h1>
-            <p>Estimate fuel cost for your trip</p>
+            <div class="header-top">
+                <div class="brand">
+                    <h1 data-i18n="title">Fuel Calculator</h1>
+                    <p data-i18n="subtitle">Estimate fuel cost for your trip</p>
+                </div>
+                <button type="button" id="lang-toggle" class="lang-btn">
+                    <span class="lang-text">العربية</span>
+                    <span class="lang-icon">🌐</span>
+                </button>
+            </div>
         </header>
 
         <div class="mode-selector">
-            <button type="button" id="mode-refill" class="mode-btn active" data-mode="refill">⛽ Fill Tank</button>
-            <button type="button" id="mode-trip" class="mode-btn" data-mode="trip">🗺️ Trip Planner</button>
+            <button type="button" id="mode-refill" class="mode-btn active" data-mode="refill" data-i18n="btnRefill">⛽ Fill Tank</button>
+            <button type="button" id="mode-trip" class="mode-btn" data-mode="trip" data-i18n="btnTrip">🗺️ Trip Planner</button>
         </div>
 
         <main class="input-section">
             <div class="form-group" id="input-group-primary">
-                <label for="distance" id="primary-label">Current Dashboard Range (KM)</label>
+                <label for="distance" id="primary-label" data-i18n="labelDashboard">Current Dashboard Range (KM)</label>
                 <input type="number" id="distance" placeholder="e.g., 250" min="0" step="any">
             </div>
 
             <div class="form-group" id="input-trip-cost" hidden>
-                <label for="trip-budget">Trip Budget (EGP) - <small>Optional if distance is set</small></label>
+                <label for="trip-budget" data-i18n="labelBudget">Trip Budget (EGP) - <small data-i18n="optional">Optional if distance is set</small></label>
                 <input type="number" id="trip-budget" placeholder="e.g., 500" min="0" step="any">
             </div>
 
             <div class="form-group">
-                <label for="price">Fuel Price per Liter (EGP)</label>
-                <input type="number" id="price" placeholder="e.g., 15.75" min="0" step="any">
+                <label for="price" data-i18n="labelPrice">Fuel Price per Liter (EGP)</label>
+                <input type="number" id="price" placeholder="e.g., 22.25" min="0" step="any">
             </div>
 
             <div class="form-group">
-                <label for="condition">Driving Condition</label>
+                <label for="condition" data-i18n="labelCondition">Driving Condition</label>
                 <select id="condition">
-                    <option value="mixed">🔀 Mixed (Mautad - 8.0L/100km)</option>
-                    <option value="city">🏙️ City Only (9.5L/100km)</option>
-                    <option value="highway">🛣️ Highway (7.0L/100km)</option>
+                    <option value="mixed" data-i18n="optionMixed">🔀 Mixed (Mautad - 8.0L/100km)</option>
+                    <option value="city" data-i18n="optionCity">🏙️ City Only (9.5L/100km)</option>
+                    <option value="highway" data-i18n="optionHighway">🛣️ Highway (7.0L/100km)</option>
                 </select>
             </div>
 
             <div class="error-message" id="error-message" aria-live="polite"></div>
 
             <div class="action-section">
-                <button type="button" id="calculate-btn" class="btn btn-primary">Calculate</button>
-                <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+                <button type="button" id="calculate-btn" class="btn btn-primary" data-i18n="btnCalculate">Calculate</button>
+                <button type="button" id="reset-btn" class="btn btn-secondary" data-i18n="btnReset">Reset</button>
             </div>
+
+            <button type="button" id="btn-analysis-toggle" class="btn btn-outline" data-i18n="btnAnalysis">📊 Show Detailed Analysis</button>
         </main>
 
         <section class="result-section" id="result-section" hidden>
             <div class="result-grid">
                 <div class="result-card" id="card-liters">
-                    <h3 id="label-liters">Liters to Fill</h3>
-                    <p id="fuel-needed-result" class="result-value">0.00 <span class="unit">Liters</span></p>
+                    <h3 id="label-liters" data-i18n="resLiters">Liters to Fill</h3>
+                    <p id="fuel-needed-result" class="result-value">0.00 <span class="unit" data-i18n="unitLiters">Liters</span></p>
                 </div>
                 <div class="result-card" id="card-cost">
-                    <h3 id="label-cost">Cost to Fill</h3>
-                    <p id="fuel-cost-result" class="result-value">0.00 <span class="unit">EGP</span></p>
+                    <h3 id="label-cost" data-i18n="resPump">Pump Price (Fuel)</h3>
+                    <p id="fuel-pump-result" class="result-value">0.00 <span class="unit" data-i18n="unitEgp">EGP</span></p>
+                </div>
+                <div class="result-card highlight" id="card-total-cost">
+                    <h3 id="label-total-cost" data-i18n="resReal">Real Operating Cost</h3>
+                    <p id="total-cost-result" class="result-value">0.00 <span class="unit" data-i18n="unitEgp">EGP</span></p>
                 </div>
                 <div class="result-card" id="card-range-added">
-                    <h3>Range Added</h3>
-                    <p id="range-added-result" class="result-value">0 <span class="unit">KM</span></p>
+                    <h3 data-i18n="resAdded">Range Added</h3>
+                    <p id="range-added-result" class="result-value">0 <span class="unit" data-i18n="unitKm">KM</span></p>
                 </div>
                 <div class="result-card" id="card-total-range">
-                    <h3>New Total Range</h3>
-                    <p id="new-range-result" class="result-value">0 <span class="unit">KM</span></p>
+                    <h3 data-i18n="resNew">New Total Range</h3>
+                    <p id="new-range-result" class="result-value">0 <span class="unit" data-i18n="unitKm">KM</span></p>
                 </div>
             </div>
         </section>
 
-        <footer class="vehicle-info">
-            <p>Optimized for: <strong>Kia Soul 2014</strong><br>
-            Tank Capacity: <strong>54L</strong> | Official Consumption: <strong>7.5 L/100km</strong></p>
-        </footer>
+        <section class="analysis-section" id="analysis-section" hidden>
+            <header class="section-header">
+                <h2 data-i18n="analysisTitle">📊 Operating Cost & Maintenance Analysis</h2>
+                <p data-i18n="analysisSubtitle">Detailed breakdown for Kia Soul 2014 (PRD)</p>
+            </header>
+
+            <div class="chart-container">
+                <img src="kia_soul_cost_breakdown_1773412541489.png" alt="Kia Soul Cost Breakdown" class="analysis-chart">
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3 data-i18n="breakdownTitle">💰 Cost per 100km Breakdown</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="thItem">Item</th>
+                                <th data-i18n="thCost">Cost</th>
+                                <th data-i18n="thDetails">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-i18n="itemPetrol">⛽ Petrol 92</td>
+                                <td>~189 <span data-i18n="unitEgp">EGP</span></td>
+                                <td data-i18n="detPetrol">8.5L × 22.25 EGP</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="itemOil">🛢️ Engine Oil</td>
+                                <td>~17 <span data-i18n="unitEgp">EGP</span></td>
+                                <td data-i18n="detOil">Every 7.5k KM</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="itemTires">🔘 Tires</td>
+                                <td>~18 <span data-i18n="unitEgp">EGP</span></td>
+                                <td data-i18n="detTires">Every 50k-60k KM</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="itemBrakes">🛑 Front Brakes</td>
+                                <td>~5 <span data-i18n="unitEgp">EGP</span></td>
+                                <td data-i18n="detBrakes">Every 40k KM</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="itemFilters">🌀 Filters (Air/Fuel)</td>
+                                <td>~4 <span data-i18n="unitEgp">EGP</span></td>
+                                <td data-i18n="detFilters">Every 30k KM</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="itemBattery">🔋 Battery</td>
+                                <td>~2 <span data-i18n="unitEgp">EGP</span></td>
+                                <td data-i18n="detBattery">Every 2-3 Years</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="total-label" data-i18n="totalLabel">🔴 Total Operating Cost</td>
+                                <td class="total-value">~239 <span data-i18n="per100">EGP / 100km</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <h3 data-i18n="scheduleTitle">📅 Maintenance Schedule</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="thMileage">Mileage</th>
+                                <th data-i18n="thService">Service</th>
+                                <th data-i18n="thEstCost">Est. Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>7,500 <span data-i18n="unitKm">KM</span></td>
+                                <td data-i18n="serOil">Oil + Filter + Insp.</td>
+                                <td>~1,300 <span data-i18n="unitEgp">EGP</span></td>
+                            </tr>
+                            <tr>
+                                <td>30,000 <span data-i18n="unitKm">KM</span></td>
+                                <td data-i18n="serFilter">Full Filters + Insp.</td>
+                                <td>~2,000 <span data-i18n="unitEgp">EGP</span></td>
+                            </tr>
+                            <tr>
+                                <td>40,000 <span data-i18n="unitKm">KM</span></td>
+                                <td data-i18n="serPlugs">Spark Plugs + Brakes</td>
+                                <td>~4,500 <span data-i18n="unitEgp">EGP</span></td>
+                            </tr>
+                            <tr>
+                                <td>60,000 <span data-i18n="unitKm">KM</span></td>
+                                <td data-i18n="serTiming">Timing Belt + Cooling</td>
+                                <td>~7,000 <span data-i18n="unitEgp">EGP</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3 data-i18n="tipsTitle">⚠️ Cost Increasing Factors</h3>
+                <ul>
+                    <li><strong data-i18n="tipAc">AC in Summer:</strong> <span data-i18n="tipAcDet">Increases consumption by ~10-15% (+26 EGP / 100km)</span></li>
+                    <li><strong data-i18n="tipTraffic">Traffic:</strong> <span data-i18n="tipTrafficDet">City consumption can reach 9.5L/100km instead of 8.5L</span></li>
+                    <li><strong data-i18n="tipTires">Tire Pressure:</strong> <span data-i18n="tipTiresDet">Low pressure increases wear and fuel consumption</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="vehicle-info">
+            <p><span data-i18n="footerOptimized">Optimized for:</span> <strong>Kia Soul 2014 (PRD)</strong></p>
+            <p><span data-i18n="footerTank">Tank Capacity (Safe/Max):</span> <strong data-i18n="footerTankVal">45L - 54L</strong> | <span data-i18n="footerPrice">Petrol 92:</span> <strong>22.25 <span data-i18n="unitEgp">EGP</span></strong> <small data-i18n="footerDate">(March 2026)</small></p>
+            <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.75rem;" data-i18n="maintNote">Maintenance cost (0.6 EGP/km) includes: Oil, Tires, Brakes, Filters, & Battery based on 60k KM cycle.</p>
+        </div>
     </div>
 
     <script src="script.js"></script>

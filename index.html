@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Calculator</title>
+    <meta name="description" content="Estimate fuel cost for your trip.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="calculator-container">
+        <header class="header">
+            <h1>Fuel Calculator</h1>
+            <p>Estimate fuel cost for your trip</p>
+        </header>
+
+        <main class="input-section">
+            <div class="form-group">
+                <label for="distance">Current Dashboard Range (KM)</label>
+                <input type="number" id="distance" placeholder="e.g., 250" min="0" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Fuel Price per Liter (EGP)</label>
+                <input type="number" id="price" placeholder="e.g., 15.75" min="0" step="any">
+            </div>
+
+            <div class="error-message" id="error-message" aria-live="polite"></div>
+
+            <div class="action-section">
+                <button type="button" id="calculate-btn" class="btn btn-primary">Calculate</button>
+                <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+        </main>
+
+        <section class="result-section" id="result-section" hidden>
+            <div class="result-card">
+                <h3>Liters to Fill Tank</h3>
+                <p id="fuel-needed-result" class="result-value">0.00 <span class="unit">Liters</span></p>
+            </div>
+            <div class="result-card">
+                <h3>Cost to Fill Full</h3>
+                <p id="fuel-cost-result" class="result-value">0.00 <span class="unit">EGP</span></p>
+            </div>
+            <div class="result-card">
+                <h3>Range Added</h3>
+                <p id="range-added-result" class="result-value">0 <span class="unit">KM</span></p>
+            </div>
+            <div class="result-card">
+                <h3>New Total Range</h3>
+                <p id="new-range-result" class="result-value">600 <span class="unit">KM</span></p>
+            </div>
+        </section>
+
+        <footer class="vehicle-info">
+            <p>Optimized for: <strong>Kia Soul 2014</strong><br>Max Range: <strong>600km</strong> | Avg. Consumption:
+                <strong>8.7 L/100km</strong></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

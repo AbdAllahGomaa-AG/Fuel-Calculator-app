@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fuelPumpResult.innerHTML = `<small>${t.approx}</small> ${pumpMin.toFixed(0)} - ${pumpMax.toFixed(0)} <span class="unit">${t.unitEgp}</span>`;
       
       totalCostResult.innerHTML = `
-          <div class="result-value"><small style="font-size: 1rem; font-weight: 400;">${t.approx}</small> ${totalMin.toFixed(0)} - ${totalMax.toFixed(0)} <span class="unit">${t.unitEgp}</span></div>
+          <div class="result-value"><small>${t.approx}</small> ${totalMin.toFixed(0)} - ${totalMax.toFixed(0)} <span class="unit">${t.unitEgp}</span></div>
           <div class="cost-breakdown-sub">
               <span>${t.breakdownFuel}: ${pumpMax.toFixed(0)}</span> + 
               <span>${t.breakdownMaint}: ${maintShareMax.toFixed(0)}</span>
